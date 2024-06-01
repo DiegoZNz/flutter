@@ -1,6 +1,12 @@
+import 'package:dismissible_carousel_viewpager/dismissible_carousel_viewpager.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  final List<String> img = [
+    'assets/img/cocina.jpg',
+    'assets/img/lb.jpg',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +37,6 @@ class HomePage extends StatelessWidget {
                 Navigator.pop(context); // Cierra el drawer
               },
             ),
-            // Puedes agregar más elementos de menú aquí
-            // Ejemplo:
             ListTile(
               leading: Icon(Icons.king_bed),
               title: Text('Recámara'),
@@ -60,12 +64,36 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(
-        child: Text('Welcome to the HomePage!'),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: DismissibleCarouselViewPager(
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  child: Center(
+                    child: Image.asset(
+                      img[index],
+                      fit: BoxFit.cover,
+                      height: 400.0, // Ajusta la altura de la imagen
+                      width: 600.0, // Ajusta el ancho de la imagen
+                    ),
+                  ),
+                );
+              },
+              itemCount: img.length,
+            ),
+          ),
+          Center(
+            child: Text('Welcome to the Home Page!'),
+          ),
+        ],
       ),
     );
   }
 }
 
-// stateless es un widget que no cambia, no tiene estado
-// scaffold es un widget que nos da una estructura de pagina
+void main() {
+  runApp(MaterialApp(
+    home: HomePage(),
+  ));
+}
